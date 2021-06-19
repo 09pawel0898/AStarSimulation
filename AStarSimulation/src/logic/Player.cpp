@@ -29,22 +29,10 @@ bool Player::move(const std::unordered_map<Keys, bool>& keysPressed, const sf::T
 void Player::update_scene(const sf::Time& dt, const std::unordered_map<Keys, bool>& keysPressed)
 {
 	move(keysPressed, dt);
-	
-	// update animation
-	//mCurrentAnim = mAnims.find(mCurrentAnimID);
-	// update camera
-
 }
-
-
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-}
-
-sf::View& Player::get_camera(void)
-{
-	return mPlayerCamera;
 }
 
 vec2f Player::get_world_pos(void)

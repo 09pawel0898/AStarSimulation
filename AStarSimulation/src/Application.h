@@ -9,10 +9,12 @@ private:
 	static const sf::Time TIME_PER_FRAME;
 
 private:
-	sf::RenderWindow mWindow;
+
+
+	sf::RenderWindow* mWindow;
 	TextureManager mTextures;
 	FontManager mFonts;
-	States::StateManager mStateManager;
+	States::StateManager* mStateManager;
 
 private:
 	sf::Text mFpsLabel;
@@ -25,8 +27,13 @@ private:
 	void process_events(void);
 	void update_scene(sf::Time elapsedTime);
 
+	void load_settings_from_file(void);
 	void init_labels(void);
 public:
 	Application(void);
 	void run(void);
+
+	static int WIDTH;
+	static int HEIGHT;
+	static int NUM_ENEMIES;
 };

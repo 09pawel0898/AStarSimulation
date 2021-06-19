@@ -1,24 +1,19 @@
 #pragma once
 
 #include "./State.h"
+#include "../logic/World.h"
 
 namespace States
 {
 	class SimulationState : public State
 	{
 	private:
-
-
-	private:
 		//GUI::WidgetContainer<Widgets> mWidgets;
 		//std::unordered_map<Keys, bool> mKeysPressed;
-		//World mWorld;
-
-		void set_gui(Context& context);
+		World* mWorld;
+		void init_resources(Context& context);
 
 	public:
-		bool mExitToMenuState;
-
 		SimulationState(StateManager &stateManager, Context context);
 		virtual ~SimulationState(void);
 

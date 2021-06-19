@@ -24,10 +24,10 @@ namespace States
 			TextureManager *mTextures;
 			FontManager *mFonts;
 
-			Context(sf::RenderWindow &window, TextureManager &textures, FontManager &fonts) :
-				mWindow(&window),
-				mTextures(&textures),
-				mFonts(&fonts)
+			Context(sf::RenderWindow* window, TextureManager* textures, FontManager* fonts) :
+				mWindow(window),
+				mTextures(textures),
+				mFonts(fonts)
 			{
 
 			}

@@ -9,7 +9,6 @@ namespace States
 		mPendingActions(),
 		mContext(context)
 	{
-
 	}
 
 	State::statePointer StateManager::create_state(ID stateID)

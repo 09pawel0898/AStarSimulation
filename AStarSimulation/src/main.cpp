@@ -5,6 +5,7 @@
 int main(void)
 {
 	Utility::console_cursor(false);
+	//Utility::hide_console();
 	Application app;
 	app.run();
 }

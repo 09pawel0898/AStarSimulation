@@ -5,55 +5,64 @@
 #include "./states/StateIdentifiers.h"
 #include "./states/SimulationState.h"
 #include "./res/ResourceIdentifiers.h"
+#include <istream>
 
 const sf::Time Application::TIME_PER_FRAME = sf::seconds(1.0f / 60.0f);
 
+int Application::HEIGHT;
+int Application::WIDTH;
+int Application::NUM_ENEMIES;
+
 Application::Application(void) :
-	mWindow(sf::RenderWindow(sf::VideoMode(1280, 720), "Game", sf::Style::Titlebar | sf::Style::Close)),
+	
 	mTextures(),
 	mFonts(),
-	mStateManager(States::State::Context(mWindow, mTextures, mFonts)),
+	
 	mFpsLabel(),
 	FPS(0)
 {
-	mWindow.setKeyRepeatEnabled(false);
-	mWindow.setFramerateLimit(100);
+	load_settings_from_file();
+	mWindow = new sf::RenderWindow(sf::VideoMode(WIDTH*64, HEIGHT*64), "Game", sf::Style::Titlebar | sf::Style::Close);
+	mStateManager = new States::StateManager(States::State::Context(mWindow, &mTextures, &mFonts));
+
+	mWindow->setKeyRepeatEnabled(false);
+	mWindow->setFramerateLimit(100);
 
 	mFonts.load_resource(Fonts::ID::SANSATION, "assets/fonts/Sansation.ttf");
-	//mTextures.load_resource(Textures::ID::B_MENU1, "assets/button1.png");
+	//mTextures.load_resource(Textures::ID::GRASS, "assets/button1.png");
 	
 	init_labels();
 	register_states();
 
-	mStateManager.add_state(States::ID::SIMULATION);
+	mStateManager->add_state(States::ID::SIMULATION);
 }
 
 void Application::render(void)
 {
-	mWindow.clear();
+	mWindow->clear();
 
-	mStateManager.render();
-	mWindow.draw(mFpsLabel);
-	mWindow.display();
+	mStateManager->render();
+	mWindow->draw(mFpsLabel);
+	mWindow->display();
 }
 
 void Application::process_events(void)
 {
 	static sf::Event event;
-	while (mWindow.pollEvent(event))
+	while (mWindow->pollEvent(event))
 	{
-		mStateManager.handle_event(event);
+		mStateManager->handle_event(event);
 
 		if (event.type == sf::Event::Closed)
 		{
-			mWindow.close();
+			mWindow->close();
 		}
 	}
 }
 
 void Application::update_scene(sf::Time deltaTime)
 {
-	mStateManager.update_scene(deltaTime);
+	mStateManager->update_scene(deltaTime);
 }
 
 void Application::update_statistics(sf::Time elapsedTime)
@@ -73,7 +82,7 @@ void Application::update_statistics(sf::Time elapsedTime)
 
 void Application::register_states(void)
 {
-	mStateManager.register_state<States::SimulationState>(States::ID::SIMULATION);
+	mStateManager->register_state<States::SimulationState>(States::ID::SIMULATION);
 }
 
 void Application::run(void)
@@ -81,7 +90,7 @@ void Application::run(void)
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-	while (mWindow.isOpen())
+	while (mWindow->isOpen())
 	{
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
@@ -92,12 +101,44 @@ void Application::run(void)
 
 			process_events();
 			update_scene(TIME_PER_FRAME);
-			if (mStateManager.is_empty())
-				mWindow.close();
+			if (mStateManager->is_empty())
+				mWindow->close();
 		}
 
 		update_statistics(elapsedTime);
 		render();
+	}
+}
+
+void Application::load_settings_from_file(void)
+{
+	std::ifstream file;
+	file.open("settings.txt");
+	std::string line;
+	if (file.good())
+	{
+		int i = 0;
+		std::string label,value;
+		std::stringstream ss;
+
+		while (std::getline(file, line))
+		{
+			ss << line;
+			ss >> label >> value;
+			switch (i)
+			{
+				case 0:	WIDTH = atoi(value.c_str());		break;
+				case 1:	HEIGHT = atoi(value.c_str());		break;
+				case 2: NUM_ENEMIES = atoi(value.c_str());	break;
+			}
+			i++;
+			ss.clear();
+		}
+		file.close();
+	}
+	else
+	{
+		perror("Error with reading setting from file");
 	}
 }
 

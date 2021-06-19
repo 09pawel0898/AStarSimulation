@@ -9,7 +9,6 @@ enum class Keys : uint8_t
 	RIGHT,
 	UP,
 	DOWN,
-
 };
 
 enum class PlayerAction : uint8_t
@@ -39,10 +38,8 @@ public:
 	Player();
 	~Player();
 
-
 	void update_scene(const sf::Time& dt, const std::unordered_map<Keys, bool>& keysPressed);
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	sf::View& get_camera(void);
 	vec2f get_world_pos(void);
 };

@@ -15,7 +15,8 @@ namespace Textures
 	enum class ID : uint8_t
 	{
 		// sprites
-		BG,
+		GRASS,
+		OBSTACLE
 	};
 }
 
