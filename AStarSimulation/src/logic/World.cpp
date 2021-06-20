@@ -84,17 +84,12 @@ bool World::switch_path_finding_type(void) const
 	return true;
 }
 
-void World::draw_graph(void) const
+void World::change_path_visibility(void) const
 {
-	mContext.mWindow->draw(*mGraph);
-}
-
-void World::change_graph_visibility(void) const
-{
-	if (mGraph->get_visibility())
-		mGraph->hide_graph();
+	if (mPathFinder->get_visibility())
+		mPathFinder->hide_path();
 	else
-		mGraph->show_graph();
+		mPathFinder->show_path();
 }
 
 void World::switch_tile_to_grass(const vec2i& coord)
@@ -107,5 +102,16 @@ void World::switch_tile_to_obstacle(const vec2i& coord)
 {
 	mGridTiles[coord.x][coord.y].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::OBSTACLE));
 	mGridTiles[coord.x][coord.y].type = TileType::OBSTACLE;
+}
+
+void World::update_ending_point(const vec2i& coord) const
+{
+	Node* temp = &mGraph->get_nodes()[coord.x * WIDTH + coord.y];
+
+	if (temp->obstacle == false)
+	{
+		mPathFinder->set_end(&mGraph->get_nodes()[coord.x * WIDTH + coord.y]);
+		mPathFinder->solve_AStar();
+	}
 }
 

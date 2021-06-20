@@ -3,6 +3,7 @@
 #include "../res/ResourceManager.h"
 #include "../Application.h"
 #include "../logic/World.h"
+#include "../logic/Graph.h"
 
 namespace States
 {
@@ -42,35 +43,41 @@ namespace States
 		});
 
 		*/
-		
 	}
 
 	void SimulationState::render(void)
 	{
 		static sf::RenderWindow* window = get_context().mWindow;
 		//window->draw(spr);
-		window->draw(*mWorld);
-
-		// if drawing graph active
-		mWorld->draw_graph();
-		
+		window->draw(*mWorld);	
 	}
 
 	bool SimulationState::update_scene(sf::Time deltaTime)
-	{
+	{	
+		static vec2i prevPointedCoord = vec2i();
 
+		mMousePos = sf::Mouse::getPosition(*get_context().mWindow);
+		bool cursorInWindow = (mMousePos.x > 0 &&  mMousePos.x < Application::WIDTH*64 && mMousePos.y > 0 && mMousePos.y < Application::HEIGHT*64) ? true : false;
 
+		if (mEndPointPositioning && cursorInWindow)
+		{
+			vec2i pointedCoord = vec2i(mMousePos.y / 64, mMousePos.x / 64);;
+			if (prevPointedCoord != pointedCoord)
+			{
+				mWorld->update_ending_point(pointedCoord);
+			}
+			prevPointedCoord = pointedCoord;
+		}
 		return true;
 	}
 
 	bool SimulationState::handle_event(const sf::Event &event)
 	{
 		static bool enable = true;
-		vec2i mousePos = sf::Mouse::getPosition(*get_context().mWindow);
 
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
-			mWorld->switch_tile_state(mousePos);
+			mWorld->switch_tile_state(mMousePos);
 		}
 		else if (event.type == sf::Event::KeyPressed)
 		{
@@ -78,16 +85,21 @@ namespace States
 			switch (event.key.code)
 			{
 				case sf::Keyboard::Space: 
-					mWorld->change_graph_visibility();
+					mWorld->change_path_visibility();
 					break;
 				case sf::Keyboard::LControl:
 					mWorld->switch_path_finding_type();
 					break;
+				case sf::Keyboard::LAlt:
+					mEndPointPositioning = true;
+					break;
 			}
 		}
 		else if (event.type == sf::Event::KeyReleased)
+		{
 			enable = true;
-
+			mEndPointPositioning = false;
+		}
 		return true;
 	}
 

@@ -53,56 +53,10 @@ Graph::Graph(uint8_t width, uint8_t height, Context context)
 	init_nodes();
 }
 
-void Graph::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	if (mIsVisible)
-	{
-		sf::RectangleShape rec,conn;
-		rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::NODE));
-		rec.setSize(vec2f(32, 32));
-		conn.setTexture(&mContext.mTextures->get_resource(Textures::ID::CONNECTION));
-		//conn.setSize(36, 4);
-
-		for (int x = 0; x < WIDTH; x++)
-		{
-			for (int y = 0; y < HEIGHT; y++)
-			{
-				if (mNodes[y * WIDTH + x].obstacle == false)
-				{
-					rec.setPosition((float)(x * 64 + 16), (float)(y * 64 + 16));
-					target.draw(rec);
-
-					for (auto node : mNodes[y * WIDTH + x].neighbours)
-					{
-						//conn.setPosition((float)(x * 64 + 16), (float)(y * 64 + 16));
-						sf::Vertex line[] = { sf::Vertex(vec2f((float)(x * 64 + 64 / 2),(float)(y * 64 + 64 / 2))),sf::Vertex(vec2f((float)(node->x * 64 + 64 / 2),(float)(node->y * 64 + 64 / 2))) };
-						target.draw(line, 2, sf::Lines);
-					}
-				}
-			}
-		}
-	}
-}
-
 void Graph::update_graph(const vec2i& coord)
 {
 	mNodes[coord.x * WIDTH + coord.y].obstacle = (mNodes[coord.x * WIDTH + coord.y].obstacle == true) ? false : true;
 	
-}
-
-void Graph::show_graph(void)
-{
-	mIsVisible = true;
-}
-
-void Graph::hide_graph(void)
-{
-	mIsVisible = false;
-}
-
-bool Graph::get_visibility(void) const
-{
-	return mIsVisible;
 }
 
 Node* Graph::get_nodes(void) const

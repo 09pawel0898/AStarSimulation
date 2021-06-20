@@ -27,9 +27,7 @@ private:
 	Context mContext;	
 	Graph* mGraph;
 
-	//
 	PathFinder* mPathFinder;
-	//
 	std::vector<std::vector<Tile>> mGridTiles;
 	
 	void init_border_obstacles(void);	
@@ -41,11 +39,11 @@ public:
 
 	bool switch_tile_state(const vec2i& mousePos);
 	bool switch_path_finding_type(void) const;
-	void draw_graph(void) const;
-	void change_graph_visibility(void) const;
+	void change_path_visibility(void) const;
+	void update_ending_point(const vec2i& coord) const;
 private:
 
 	void switch_tile_to_grass(const vec2i& coord);
 	void switch_tile_to_obstacle(const vec2i& coord);
-
+	
 };

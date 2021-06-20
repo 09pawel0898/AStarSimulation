@@ -12,7 +12,8 @@ namespace States
 		//std::unordered_map<Keys, bool> mKeysPressed;
 		World* mWorld;
 		void init_resources(Context& context);
-
+		vec2i mMousePos;
+		bool mEndPointPositioning = false;
 	public:
 		SimulationState(StateManager &stateManager, Context context);
 		virtual ~SimulationState(void);

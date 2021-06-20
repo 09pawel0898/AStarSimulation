@@ -10,16 +10,19 @@ PathFinder::PathFinder(Graph* graph)
 	node.y = 3;
 	//default value
 	mStart = &graph->get_nodes()[1 * graph->WIDTH + 1];
-	mEnd = &graph->get_nodes()[(graph->HEIGHT -1) * graph->WIDTH + graph->WIDTH - 2];
+	mEnd = &graph->get_nodes()[(graph->HEIGHT -2) * graph->WIDTH + graph->WIDTH - 2];
 }
 
 
 
 void PathFinder::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	draw_start_and_end(target);
-	draw_visited_nodes(target);
-	draw_found_path(target);
+	if (mIsVisible)
+	{
+		draw_start_and_end(target);
+		draw_visited_nodes(target);
+		draw_found_path(target);
+	}
 }
 
 void PathFinder::draw_start_and_end(sf::RenderTarget& target) const
@@ -40,11 +43,13 @@ void PathFinder::draw_visited_nodes(sf::RenderTarget& target) const
 	rec.setFillColor(sf::Color::Green);
 	rec.setSize(vec2f(32, 32));
 
+	Node* nodes = mGraph->get_nodes();
+
 	for (int x = 0; x < mGraph->WIDTH; x++)
 	{
 		for (int y = 0; y < mGraph->HEIGHT; y++)
 		{
-			if (mGraph->get_nodes()[y * mGraph->WIDTH + x].visited == true)
+			if (nodes[y * mGraph->WIDTH + x].visited == true && &nodes[y * mGraph->WIDTH + x] != mEnd && &nodes[y * mGraph->WIDTH + x] != mStart)
 			{
 				rec.setPosition((float)(x * 64 + 16), (float)(y * 64 + 16));
 				target.draw(rec);
@@ -167,3 +172,27 @@ Node* PathFinder::get_end(void) const
 	return mEnd;
 }
 
+void PathFinder::set_start(Node* node)
+{
+	mStart = node;
+}
+
+void PathFinder::set_end(Node* node)
+{
+	mEnd = node;
+}
+
+void PathFinder::show_path(void)
+{
+	mIsVisible = true;
+}
+
+void PathFinder::hide_path(void)
+{
+	mIsVisible = false;
+}
+
+bool PathFinder::get_visibility(void) const
+{
+	return mIsVisible;
+}
