@@ -1,14 +1,15 @@
 #pragma once
 
 struct Node;
-class Graph;
+#include "Graph.h"
 
 class PathFinder : public sf::Drawable
 {
 private:
-	Node* mStart = nullptr;
-	Node* mEnd = nullptr;
-	Graph* mGraph;
+	uint8_t mId;
+	Node* mStart;
+	Node* mEnd;
+	Graph mGraph;
 	bool mShortest = true;
 	bool mIsVisible = false;
 
@@ -19,7 +20,7 @@ private:
 	
 public:
 
-	PathFinder(Graph* graph);
+	PathFinder(Graph graph, const vec2i& start);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void solve_AStar(void);

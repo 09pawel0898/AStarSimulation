@@ -246,7 +246,7 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     void draw(const Vertex* vertices, std::size_t vertexCount,
-              PrimitiveType type, const RenderStates& states = RenderStates::Default);
+              PrimitiveType tileType, const RenderStates& states = RenderStates::Default);
 
     ////////////////////////////////////////////////////////////
     /// \brief Draw primitives defined by a vertex buffer
@@ -440,7 +440,7 @@ private:
     /// \param vertexCount Number of vertices to use when drawing
     ///
     ////////////////////////////////////////////////////////////
-    void drawPrimitives(PrimitiveType type, std::size_t firstVertex, std::size_t vertexCount);
+    void drawPrimitives(PrimitiveType tileType, std::size_t firstVertex, std::size_t vertexCount);
 
     ////////////////////////////////////////////////////////////
     /// \brief Clean up environment after drawing

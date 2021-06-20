@@ -21,6 +21,7 @@
 #include <iomanip>
 #include <fstream>
 #include <thread>
+#include <time.h>
 
 typedef sf::Vector2i vec2i;
 typedef sf::Vector2f vec2f;

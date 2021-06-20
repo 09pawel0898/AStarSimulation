@@ -53,7 +53,7 @@ void Application::process_events(void)
 	{
 		mStateManager->handle_event(event);
 
-		if (event.type == sf::Event::Closed)
+		if (event.tileType == sf::Event::Closed)
 		{
 			mWindow->close();
 		}

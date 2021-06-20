@@ -174,7 +174,7 @@ public:
     ////////////////////////////////////////////////////////////
     struct SensorEvent
     {
-        Sensor::Type type; ///< Type of the sensor
+        Sensor::Type tileType; ///< Type of the sensor
         float x;           ///< Current value of the sensor on X axis
         float y;           ///< Current value of the sensor on Y axis
         float z;           ///< Current value of the sensor on Z axis
@@ -216,7 +216,7 @@ public:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    EventType type; ///< Type of the event
+    EventType tileType; ///< Type of the event
 
     union
     {

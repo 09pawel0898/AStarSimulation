@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "PathFinder.h"
-#include "Graph.h"
 
-PathFinder::PathFinder(Graph* graph)
-	:	mGraph(graph)
+PathFinder::PathFinder(Graph graph, const vec2i& start)
+	: mGraph(graph)
 {
+	static int IDgen = 0;
+	mId = IDgen++;
 	Node node;
 	node.x = 3;
 	node.y = 3;
 	//default value
-	mStart = &graph->get_nodes()[1 * graph->WIDTH + 1];
-	mEnd = &graph->get_nodes()[(graph->HEIGHT -2) * graph->WIDTH + graph->WIDTH - 2];
+	mStart = &graph.get_nodes()[start.x * graph.WIDTH + start.y];
+	mEnd = &graph.get_nodes()[(graph.HEIGHT -2) * graph.WIDTH + graph.WIDTH - 2];
 }
 
 
@@ -40,16 +41,16 @@ void PathFinder::draw_start_and_end(sf::RenderTarget& target) const
 void PathFinder::draw_visited_nodes(sf::RenderTarget& target) const
 {
 	sf::RectangleShape rec;
-	rec.setFillColor(sf::Color::Green);
+	rec.setFillColor(sf::Color(0,255,0,50));
 	rec.setSize(vec2f(32, 32));
 
-	Node* nodes = mGraph->get_nodes();
+	Node* nodes = mGraph.get_nodes();
 
-	for (int x = 0; x < mGraph->WIDTH; x++)
+	for (int x = 0; x < mGraph.WIDTH; x++)
 	{
-		for (int y = 0; y < mGraph->HEIGHT; y++)
+		for (int y = 0; y < mGraph.HEIGHT; y++)
 		{
-			if (nodes[y * mGraph->WIDTH + x].visited == true && &nodes[y * mGraph->WIDTH + x] != mEnd && &nodes[y * mGraph->WIDTH + x] != mStart)
+			if (nodes[y * mGraph.WIDTH + x].visited == true && &nodes[y * mGraph.WIDTH + x] != mEnd && &nodes[y * mGraph.WIDTH + x] != mStart)
 			{
 				rec.setPosition((float)(x * 64 + 16), (float)(y * 64 + 16));
 				target.draw(rec);
@@ -70,8 +71,8 @@ void PathFinder::draw_found_path(sf::RenderTarget& target) const
 				sf::Vertex(vec2f((float)(pivot->x * 64 + 64 / 2),(float)(pivot->y * 64 + 64 / 2))),
 				sf::Vertex(vec2f((float)(pivot->parent->x * 64 + 64 / 2),(float)(pivot->parent->y * 64 + 64 / 2))) 
 			};
-			line[0].color = sf::Color::Cyan;
-			line[1].color = sf::Color::Cyan;
+			sf::Color color = sf::Color::Green;
+			line[0].color = line[1].color = color;
 			target.draw(line, 2, sf::Lines);
 			pivot = pivot->parent;
 		}
@@ -80,16 +81,16 @@ void PathFinder::draw_found_path(sf::RenderTarget& target) const
 
 void PathFinder::solve_AStar(void)
 {
-	Node* nodes = mGraph->get_nodes();
+	Node* nodes = mGraph.get_nodes();
 
-	for (int x = 0; x < mGraph->WIDTH; x++)
+	for (int x = 0; x < mGraph.WIDTH; x++)
 	{
-		for (int y = 0; y < mGraph->HEIGHT; y++)
+		for (int y = 0; y < mGraph.HEIGHT; y++)
 		{
-			nodes[y * mGraph->WIDTH + x].visited = false;
-			nodes[y * mGraph->WIDTH + x].globalGoal = INFINITY;
-			nodes[y * mGraph->WIDTH + x].localGoal = INFINITY;
-			nodes[y * mGraph->WIDTH + x].parent = nullptr;
+			nodes[y * mGraph.WIDTH + x].visited = false;
+			nodes[y * mGraph.WIDTH + x].globalGoal = INFINITY;
+			nodes[y * mGraph.WIDTH + x].localGoal = INFINITY;
+			nodes[y * mGraph.WIDTH + x].parent = nullptr;
 		}
 	}
 

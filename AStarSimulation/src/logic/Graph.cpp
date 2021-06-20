@@ -2,11 +2,17 @@
 #include "Graph.h"
 #include "../res/ResourceManager.h"
 
+Graph::Graph(uint8_t width, uint8_t height)
+	:	WIDTH(width),
+		HEIGHT(height)
+{
+	init_nodes();
+}
 
 bool Graph::init_nodes(void)
 {
 	mNodes = new Node[WIDTH * HEIGHT];
-	
+
 	//init positions
 	for (int i = 0; i < WIDTH; i++)
 	{
@@ -30,27 +36,19 @@ bool Graph::init_nodes(void)
 				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[j * WIDTH + (i - 1)]);
 			if (i < WIDTH - 1)
 				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[j * WIDTH + (i + 1)]);
-			
-			if (j>0 && i>0)
+
+			if (j > 0 && i > 0)
 				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[(j - 1) * WIDTH + (i - 1)]);
-			if (j< HEIGHT -1 && i>0)
-				mNodes[j* WIDTH + i].neighbours.push_back(&mNodes[(j + 1) * WIDTH + (i - 1)]);
-			if (j>0 && i< WIDTH -1)
-				mNodes[j* WIDTH + i].neighbours.push_back(&mNodes[(j - 1) * WIDTH + (i + 1)]);
-			if (j< HEIGHT - 1 && i< WIDTH -1)
-				mNodes[j* WIDTH + i].neighbours.push_back(&mNodes[(j + 1) * WIDTH + (i + 1)]);
+			if (j < HEIGHT - 1 && i>0)
+				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[(j + 1) * WIDTH + (i - 1)]);
+			if (j > 0 && i < WIDTH - 1)
+				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[(j - 1) * WIDTH + (i + 1)]);
+			if (j < HEIGHT - 1 && i < WIDTH - 1)
+				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[(j + 1) * WIDTH + (i + 1)]);
 		}
 	}
 
 	return true;
-}
-
-Graph::Graph(uint8_t width, uint8_t height, Context context)
-	:	WIDTH(width),
-		HEIGHT(height),
-		mContext(context)
-{
-	init_nodes();
 }
 
 void Graph::update_graph(const vec2i& coord)

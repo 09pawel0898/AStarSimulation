@@ -23,9 +23,20 @@ namespace States
 	void SimulationState::init_resources(Context& context)
 	{
 		context.mTextures->load_resource(Textures::ID::GRASS, "assets/img/grass.png");
-		context.mTextures->load_resource(Textures::ID::OBSTACLE, "assets/img/obstacle.png");
+		context.mTextures->load_resource(Textures::ID::OBS, "assets/img/obstacle.png");
 		context.mTextures->load_resource(Textures::ID::NODE, "assets/img/node.png");
 		context.mTextures->load_resource(Textures::ID::CONNECTION, "assets/img/connection.png");
+		context.mTextures->load_resource(Textures::ID::OBSCROSS, "assets/img/obstacle9.png");
+		context.mTextures->load_resource(Textures::ID::OBSDOWN, "assets/img/obstacle6.png");
+		context.mTextures->load_resource(Textures::ID::OBSLEFT, "assets/img/obstacle7.png");
+		context.mTextures->load_resource(Textures::ID::OBSRIGHT, "assets/img/obstacle5.png");
+		context.mTextures->load_resource(Textures::ID::OBSUP, "assets/img/obstacle8.png");
+		context.mTextures->load_resource(Textures::ID::OBSUPDOWN, "assets/img/obstacle4.png");
+		context.mTextures->load_resource(Textures::ID::OBSLEFTRIGHT, "assets/img/obstacle3.png");
+		context.mTextures->load_resource(Textures::ID::OBSDOWNLEFT, "assets/img/obstacle11.png");
+		context.mTextures->load_resource(Textures::ID::OBSDOWNRIGHT, "assets/img/obstacle10.png");
+		context.mTextures->load_resource(Textures::ID::OBSUPLEFT, "assets/img/obstacle12.png");
+		context.mTextures->load_resource(Textures::ID::OBSUPRIGHT, "assets/img/obstacle13.png");
 
 		//spr.setTexture(context.mTextures->get_resource(Textures::ID::GRASS));
 
@@ -75,11 +86,11 @@ namespace States
 	{
 		static bool enable = true;
 
-		if (event.type == sf::Event::MouseButtonReleased)
+		if (event.tileType == sf::Event::MouseButtonReleased)
 		{
 			mWorld->switch_tile_state(mMousePos);
 		}
-		else if (event.type == sf::Event::KeyPressed)
+		else if (event.tileType == sf::Event::KeyPressed)
 		{
 			enable = false;
 			switch (event.key.code)
@@ -95,7 +106,7 @@ namespace States
 					break;
 			}
 		}
-		else if (event.type == sf::Event::KeyReleased)
+		else if (event.tileType == sf::Event::KeyReleased)
 		{
 			enable = true;
 			mEndPointPositioning = false;

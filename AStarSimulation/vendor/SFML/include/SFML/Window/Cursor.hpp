@@ -157,7 +157,7 @@ public:
     ///         false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    bool loadFromSystem(Type type);
+    bool loadFromSystem(Type tileType);
 
 private:
 

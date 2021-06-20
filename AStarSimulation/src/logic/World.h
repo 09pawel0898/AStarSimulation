@@ -4,18 +4,31 @@
 
 class Graph;
 class PathFinder;
+class Enemy;
 typedef States::State::Context Context;
+
+enum class ConnectionType : uint8_t
+{
+	DOWN,
+	UP,
+	LEFT,
+	RIGHT,
+	UPDOWN,
+	LEFTRIGHT,
+	CROSS
+};
 
 enum class TileType : uint8_t
 {
 	GRASS,
-	OBSTACLE
+	OBS
 };
 
 struct Tile
 {
 	sf::RectangleShape rec;
-	TileType type;
+	TileType tileType;
+	ConnectionType connectionType;
 };
 
 class World : public sf::Drawable
@@ -24,13 +37,13 @@ private:
 	uint8_t WIDTH;
 	uint8_t HEIGHT;
 	uint8_t mNumEnemies;
+
 	Context mContext;	
-	Graph* mGraph;
-	PathFinder* mPathFinder;
-	
+	std::list<Enemy> mEnemies;
 	std::vector<std::vector<Tile>> mGridTiles;
 	
 	void init_border_obstacles(void);	
+	void init_enemies(Context context);
 public:
 	void init_world(void);
 
@@ -43,7 +56,7 @@ public:
 	void update_ending_point(const vec2i& coord) const;
 private:
 
-	void switch_tile_to_grass(const vec2i& coord);
-	void switch_tile_to_obstacle(const vec2i& coord);
-	
+	//void switch_tile_to_grass(const vec2i& coord);
+	//void switch_tile_to_obstacle(const vec2i& coord);
+	bool update_grid_tiles(const vec2i& coord);
 };

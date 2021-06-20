@@ -24,15 +24,16 @@ public:
 	uint8_t HEIGHT;
 
 private:
-	Context mContext;
 	Node* mNodes = nullptr;
-
-	//bool mIsVisible;
 
 	bool init_nodes(void);
 public:
-	Graph(uint8_t width, uint8_t height, Context context);
+	Graph(uint8_t width, uint8_t height);
+
 	void update_graph(const vec2i& coord);
 	Node* get_nodes(void) const;
+
+	
+
 };
 
