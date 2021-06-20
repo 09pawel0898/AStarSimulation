@@ -26,8 +26,8 @@ private:
 	uint8_t mNumEnemies;
 	Context mContext;	
 	Graph* mGraph;
-
 	PathFinder* mPathFinder;
+	
 	std::vector<std::vector<Tile>> mGridTiles;
 	
 	void init_border_obstacles(void);	
