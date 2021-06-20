@@ -3,6 +3,7 @@
 #include "../states/State.h"
 
 class Graph;
+class PathFinder;
 typedef States::State::Context Context;
 
 enum class TileType : uint8_t
@@ -20,11 +21,15 @@ struct Tile
 class World : public sf::Drawable
 {
 private:
-	uint8_t mWidth;
-	uint8_t mHeight;
+	uint8_t WIDTH;
+	uint8_t HEIGHT;
 	uint8_t mNumEnemies;
 	Context mContext;	
 	Graph* mGraph;
+
+	//
+	PathFinder* mPathFinder;
+	//
 	std::vector<std::vector<Tile>> mGridTiles;
 	
 	void init_border_obstacles(void);	

@@ -19,10 +19,14 @@ struct Node
 
 class Graph : public sf::Drawable
 {
+public:
+	uint8_t WIDTH;
+	uint8_t HEIGHT;
+
+private:
 	Context mContext;
 	Node* mNodes = nullptr;
-	uint8_t mWidth;
-	uint8_t mHeight;
+
 	bool mIsVisible;
 
 	bool init_nodes(void);
@@ -33,5 +37,6 @@ public:
 	void show_graph(void);
 	void hide_graph(void);
 	bool get_visibility(void) const;
+	Node* get_nodes(void) const;
 };
 

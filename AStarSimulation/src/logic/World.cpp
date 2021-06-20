@@ -3,14 +3,16 @@
 #include "World.h"
 #include "../res/ResourceManager.h"
 #include "Graph.h"
+#include "PathFinder.h"
 
 World::World(uint8_t width, uint8_t height, uint8_t numEnemies, Context context)
-	:	mWidth(width),
-		mHeight(height),
+	:	WIDTH(width),
+		HEIGHT(height),
 		mNumEnemies(numEnemies),
 		mContext(context)
 {
-	mGraph = new Graph(mWidth, mHeight, mContext);
+	mGraph = new Graph(WIDTH, HEIGHT, mContext);
+	mPathFinder = new PathFinder(mGraph);
 }
 
 void World::init_world(void)
@@ -20,27 +22,27 @@ void World::init_world(void)
 	temp.rec.setSize(vec2f(64, 64));
 	temp.type = TileType::GRASS;
 
-	for (int i = 0; i < mHeight; i++)
+	for (int i = 0; i < HEIGHT; i++)
 	{
 		mGridTiles.emplace_back(std::vector<Tile>());
-		for (int j = 0; j < mWidth; j++)
+		for (int j = 0; j < WIDTH; j++)
 		{
 			temp.rec.setPosition(vec2f((float)(j * 64), (float)(i * 64)));
 			mGridTiles[i].emplace_back(temp);
 		}
 	}
-	init_border_obstacles();
+	//init_border_obstacles();
 }
 
 void World::init_border_obstacles(void)
 {
 	bool obstacle;
-	for (int i = 0; i < mHeight; i++)
+	for (int i = 0; i < HEIGHT; i++)
 	{
 		obstacle = false;
-		for (int j = 0; j < mWidth; j++)
+		for (int j = 0; j < WIDTH; j++)
 		{
-			if ((i == 0 || i == mHeight - 1) || (j == 0 || j == mWidth - 1))
+			if ((i == 0 || i == HEIGHT - 1) || (j == 0 || j == WIDTH - 1))
 			{
 				mGridTiles[i][j].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::OBSTACLE));
 				mGridTiles[i][j].type = TileType::OBSTACLE;
@@ -52,13 +54,14 @@ void World::init_border_obstacles(void)
 
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (int i = 0; i < mHeight; i++)
+	for (int i = 0; i < HEIGHT; i++)
 	{
-		for (int j = 0; j < mWidth; j++)
+		for (int j = 0; j < WIDTH; j++)
 		{
 			target.draw(mGridTiles[i][j].rec);
 		}
 	}
+	target.draw(*mPathFinder);
 }
 
 bool World::try_add_obstacle(const vec2i& mousePos)
