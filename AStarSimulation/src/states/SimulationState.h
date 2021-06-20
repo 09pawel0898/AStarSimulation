@@ -1,7 +1,7 @@
 #pragma once
 
 #include "./State.h"
-#include "../logic/World.h"
+class World;
 
 namespace States
 {

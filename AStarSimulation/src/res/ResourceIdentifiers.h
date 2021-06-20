@@ -16,7 +16,9 @@ namespace Textures
 	{
 		// sprites
 		GRASS,
-		OBSTACLE
+		OBSTACLE,
+		NODE,
+		CONNECTION
 	};
 }
 

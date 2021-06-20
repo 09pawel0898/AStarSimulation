@@ -1,13 +1,16 @@
 #include "pch.h"
+
 #include "World.h"
 #include "../res/ResourceManager.h"
+#include "Graph.h"
 
-World::World(uint8_t width, uint8_t height, uint8_t numEnemies, States::State::Context context)
+World::World(uint8_t width, uint8_t height, uint8_t numEnemies, Context context)
 	:	mWidth(width),
 		mHeight(height),
 		mNumEnemies(numEnemies),
 		mContext(context)
 {
+	mGraph = new Graph(mWidth, mHeight, mContext);
 }
 
 void World::init_world(void)
@@ -41,6 +44,7 @@ void World::init_border_obstacles(void)
 			{
 				mGridTiles[i][j].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::OBSTACLE));
 				mGridTiles[i][j].type = TileType::OBSTACLE;
+				mGraph->update_graph(vec2i(i, j));
 			}
 		}
 	}
@@ -57,26 +61,39 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	}
 }
 
-void World::try_add_obstacle(const vec2i& mousePos)
+bool World::try_add_obstacle(const vec2i& mousePos)
 {
 	vec2i coord = vec2i(mousePos.y / 64, mousePos.x / 64);
 	if (mGridTiles[coord.x][coord.y].type == TileType::GRASS)
 		switch_tile_to_obstacle(coord);
-	else
+	else if(mGridTiles[coord.x][coord.y].type == TileType::OBSTACLE)
 		switch_tile_to_grass(coord);
+	mGraph->update_graph(coord);
+	return true;
+}
+
+void World::draw_graph(void) const
+{
+	mContext.mWindow->draw(*mGraph);
+}
+
+void World::change_graph_visibility(void) const
+{
+	if (mGraph->get_visibility())
+		mGraph->hide_graph();
+	else
+		mGraph->show_graph();
 }
 
 void World::switch_tile_to_grass(const vec2i& coord)
 {
 	mGridTiles[coord.x][coord.y].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::GRASS));
 	mGridTiles[coord.x][coord.y].type = TileType::GRASS;
-	//updateGraph();
 }
 
 void World::switch_tile_to_obstacle(const vec2i& coord)
 {
 	mGridTiles[coord.x][coord.y].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::OBSTACLE));
 	mGridTiles[coord.x][coord.y].type = TileType::OBSTACLE;
-	//updateGraph();
 }
 

@@ -2,6 +2,9 @@
 
 #include "../states/State.h"
 
+class Graph;
+typedef States::State::Context Context;
+
 enum class TileType : uint8_t
 {
 	GRASS,
@@ -20,20 +23,20 @@ private:
 	uint8_t mWidth;
 	uint8_t mHeight;
 	uint8_t mNumEnemies;
-	States::State::Context mContext;
-
+	Context mContext;	
+	Graph* mGraph;
 	std::vector<std::vector<Tile>> mGridTiles;
 	
 	void init_border_obstacles(void);	
 public:
 	void init_world(void);
 
-	World(uint8_t width, uint8_t height, uint8_t numEnemies, States::State::Context context);
+	World(uint8_t width, uint8_t height, uint8_t numEnemies, Context context);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	void try_add_obstacle(const vec2i& mousePos);
-
-
+	bool try_add_obstacle(const vec2i& mousePos);
+	void draw_graph(void) const;
+	void change_graph_visibility(void) const;
 private:
 
 	void switch_tile_to_grass(const vec2i& coord);

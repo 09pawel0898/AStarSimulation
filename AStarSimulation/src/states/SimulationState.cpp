@@ -2,7 +2,7 @@
 #include "./SimulationState.h"
 #include "../res/ResourceManager.h"
 #include "../Application.h"
-
+#include "../logic/World.h"
 
 namespace States
 {
@@ -23,6 +23,9 @@ namespace States
 	{
 		context.mTextures->load_resource(Textures::ID::GRASS, "assets/img/grass.png");
 		context.mTextures->load_resource(Textures::ID::OBSTACLE, "assets/img/obstacle.png");
+		context.mTextures->load_resource(Textures::ID::NODE, "assets/img/node.png");
+		context.mTextures->load_resource(Textures::ID::CONNECTION, "assets/img/connection.png");
+
 		//spr.setTexture(context.mTextures->get_resource(Textures::ID::GRASS));
 
 
@@ -47,6 +50,9 @@ namespace States
 		static sf::RenderWindow* window = get_context().mWindow;
 		//window->draw(spr);
 		window->draw(*mWorld);
+
+		// if drawing graph active
+		mWorld->draw_graph();
 		
 	}
 
@@ -59,13 +65,26 @@ namespace States
 
 	bool SimulationState::handle_event(const sf::Event &event)
 	{
-
+		static bool enable = true;
 		vec2i mousePos = sf::Mouse::getPosition(*get_context().mWindow);
 
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			mWorld->try_add_obstacle(mousePos);
 		}
+		else if (event.type == sf::Event::KeyPressed)
+		{
+			enable = false;
+			switch (event.key.code)
+			{
+				case sf::Keyboard::Space: 
+					mWorld->change_graph_visibility();
+					break;
+			}
+		}
+		else if (event.type == sf::Event::KeyReleased)
+			enable = true;
+
 		return true;
 	}
 
