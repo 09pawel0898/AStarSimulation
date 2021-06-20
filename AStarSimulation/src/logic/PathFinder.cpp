@@ -9,8 +9,8 @@ PathFinder::PathFinder(Graph* graph)
 	node.x = 3;
 	node.y = 3;
 	//default value
-	mStart = &graph->get_nodes()[graph->HEIGHT / 2 * graph->WIDTH + 1];
-	mEnd = &graph->get_nodes()[graph->HEIGHT / 2 * graph->WIDTH + graph->WIDTH - 2];
+	mStart = &graph->get_nodes()[1 * graph->WIDTH + 1];
+	mEnd = &graph->get_nodes()[(graph->HEIGHT -1) * graph->WIDTH + graph->WIDTH - 2];
 }
 
 
@@ -65,6 +65,8 @@ void PathFinder::draw_found_path(sf::RenderTarget& target) const
 				sf::Vertex(vec2f((float)(pivot->x * 64 + 64 / 2),(float)(pivot->y * 64 + 64 / 2))),
 				sf::Vertex(vec2f((float)(pivot->parent->x * 64 + 64 / 2),(float)(pivot->parent->y * 64 + 64 / 2))) 
 			};
+			line[0].color = sf::Color::Cyan;
+			line[1].color = sf::Color::Cyan;
 			target.draw(line, 2, sf::Lines);
 			pivot = pivot->parent;
 		}
@@ -103,7 +105,9 @@ void PathFinder::solve_AStar(void)
 	std::list<Node*> notTestedNodes;
 	notTestedNodes.push_back(mStart);
 
-	while (!notTestedNodes.empty())
+	bool finish(false);
+
+	do
 	{
 		notTestedNodes.sort
 		([](const Node* lhs, const Node* rhs) 
@@ -134,7 +138,23 @@ void PathFinder::solve_AStar(void)
 				neighbour->globalGoal = neighbour->localGoal + heuristic(neighbour, mEnd);
 			}
 		}
-	}
+
+		if (mShortest)
+		{
+			if (notTestedNodes.empty())
+				finish = true;
+		}
+		else if (!mShortest)
+		{
+			if (!(!notTestedNodes.empty() && nodeCurrent != mEnd))
+				finish = true;
+		}
+	} while (!finish);
+}
+
+void PathFinder::change_path_type(void)
+{
+	mShortest = (mShortest) ? false : true;
 }
 
 Node* PathFinder::get_start(void) const

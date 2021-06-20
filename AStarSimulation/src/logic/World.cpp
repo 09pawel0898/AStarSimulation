@@ -64,14 +64,23 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(*mPathFinder);
 }
 
-bool World::try_add_obstacle(const vec2i& mousePos)
+bool World::switch_tile_state(const vec2i& mousePos)
 {
 	vec2i coord = vec2i(mousePos.y / 64, mousePos.x / 64);
 	if (mGridTiles[coord.x][coord.y].type == TileType::GRASS)
 		switch_tile_to_obstacle(coord);
 	else if(mGridTiles[coord.x][coord.y].type == TileType::OBSTACLE)
 		switch_tile_to_grass(coord);
+
 	mGraph->update_graph(coord);
+	mPathFinder->solve_AStar();
+	return true;
+}
+
+bool World::switch_path_finding_type(void) const
+{
+	mPathFinder->change_path_type();
+	mPathFinder->solve_AStar();
 	return true;
 }
 

@@ -70,7 +70,7 @@ namespace States
 
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
-			mWorld->try_add_obstacle(mousePos);
+			mWorld->switch_tile_state(mousePos);
 		}
 		else if (event.type == sf::Event::KeyPressed)
 		{
@@ -79,6 +79,9 @@ namespace States
 			{
 				case sf::Keyboard::Space: 
 					mWorld->change_graph_visibility();
+					break;
+				case sf::Keyboard::LControl:
+					mWorld->switch_path_finding_type();
 					break;
 			}
 		}

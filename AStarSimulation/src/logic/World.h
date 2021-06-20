@@ -39,7 +39,8 @@ public:
 	World(uint8_t width, uint8_t height, uint8_t numEnemies, Context context);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	bool try_add_obstacle(const vec2i& mousePos);
+	bool switch_tile_state(const vec2i& mousePos);
+	bool switch_path_finding_type(void) const;
 	void draw_graph(void) const;
 	void change_graph_visibility(void) const;
 private:

@@ -30,6 +30,15 @@ bool Graph::init_nodes(void)
 				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[j * WIDTH + (i - 1)]);
 			if (i < WIDTH - 1)
 				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[j * WIDTH + (i + 1)]);
+			
+			if (j>0 && i>0)
+				mNodes[j * WIDTH + i].neighbours.push_back(&mNodes[(j - 1) * WIDTH + (i - 1)]);
+			if (j< HEIGHT -1 && i>0)
+				mNodes[j* WIDTH + i].neighbours.push_back(&mNodes[(j + 1) * WIDTH + (i - 1)]);
+			if (j>0 && i< WIDTH -1)
+				mNodes[j* WIDTH + i].neighbours.push_back(&mNodes[(j - 1) * WIDTH + (i + 1)]);
+			if (j< HEIGHT - 1 && i< WIDTH -1)
+				mNodes[j* WIDTH + i].neighbours.push_back(&mNodes[(j + 1) * WIDTH + (i + 1)]);
 		}
 	}
 
@@ -79,33 +88,6 @@ void Graph::update_graph(const vec2i& coord)
 {
 	mNodes[coord.x * WIDTH + coord.y].obstacle = (mNodes[coord.x * WIDTH + coord.y].obstacle == true) ? false : true;
 	
-	Node* nodeToUpdate = &mNodes[coord.x * WIDTH + coord.y];
-
-	if (nodeToUpdate->obstacle)
-	{
-		for (auto node : nodeToUpdate->neighbours)
-		{
-			//node->neighbours.erase(std::remove(node->neighbours.begin(), node->neighbours.end(), &nodeToUpdate),node->neighbours.end());
-			node->neighbours.clear();
-
-		}
-		nodeToUpdate->neighbours.clear();
-
-		/*
-		if (coord.x > 0)
-			mNodes[coord.x * mWidth + coord.x].neighbours.push_back(&mNodes[(coord.x - 1) * mWidth + coord.x]);
-		if (coord.x < mHeight - 1)
-			mNodes[coord.x * mWidth + coord.x].neighbours.push_back(&mNodes[(coord.x + 1) * mWidth + coord.x]);
-		if (coord.x > 0)
-			mNodes[coord.x * mWidth + coord.x].neighbours.push_back(&mNodes[coord.x * mWidth + (coord.x - 1)]);
-		if (coord.x < mWidth - 1)
-			mNodes[coord.x * mWidth + coord.x].neighbours.push_back(&mNodes[coord.x * mWidth + (coord.x + 1)]);
-		*/
-	}
-	else
-	{
-		
-	}
 }
 
 void Graph::show_graph(void)
