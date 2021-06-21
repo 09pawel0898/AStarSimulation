@@ -15,7 +15,16 @@ enum class ConnectionType : uint8_t
 	RIGHT,
 	UPDOWN,
 	LEFTRIGHT,
-	CROSS
+	CROSS,
+	CENTER,
+	UPLEFT,
+	UPRIGHT,
+	DOWNLEFT,
+	DOWNRIGHT,
+	TRILEFT,
+	TRIRIGHT,
+	TRIDOWN,
+	TRIUP,
 };
 
 enum class TileType : uint8_t

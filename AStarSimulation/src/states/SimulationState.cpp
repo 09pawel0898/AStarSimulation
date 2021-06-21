@@ -37,6 +37,10 @@ namespace States
 		context.mTextures->load_resource(Textures::ID::OBSDOWNRIGHT, "assets/img/obstacle10.png");
 		context.mTextures->load_resource(Textures::ID::OBSUPLEFT, "assets/img/obstacle12.png");
 		context.mTextures->load_resource(Textures::ID::OBSUPRIGHT, "assets/img/obstacle13.png");
+		context.mTextures->load_resource(Textures::ID::OBSTRIRIGHT, "assets/img/obstacle17.png");
+		context.mTextures->load_resource(Textures::ID::OBSTRILEFT, "assets/img/obstacle15.png");
+		context.mTextures->load_resource(Textures::ID::OBSTRIDOWN, "assets/img/obstacle14.png");
+		context.mTextures->load_resource(Textures::ID::OBSTRIUP, "assets/img/obstacle16.png");
 
 		//spr.setTexture(context.mTextures->get_resource(Textures::ID::GRASS));
 
