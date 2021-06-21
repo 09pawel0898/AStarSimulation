@@ -22,7 +22,7 @@ Application::Application(void) :
 	FPS(0)
 {
 	load_settings_from_file();
-	mWindow = new sf::RenderWindow(sf::VideoMode(WIDTH*64, HEIGHT*64), "Game", sf::Style::Titlebar | sf::Style::Close);
+	mWindow = new sf::RenderWindow(sf::VideoMode(WIDTH*64, HEIGHT*64), "AStarSimulation", sf::Style::Titlebar | sf::Style::Close);
 	mStateManager = new States::StateManager(States::State::Context(mWindow, &mTextures, &mFonts));
 
 	mWindow->setKeyRepeatEnabled(false);

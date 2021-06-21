@@ -24,6 +24,7 @@ public:
 	void set_duration(sf::Time duration);
 	void set_repeat(bool repeat);
 	void set_rect_inverse(bool inverse, bool resetAnim);
+	void rotate(float degrees);
 	void center_origin(void);
 	bool get_rect_inverse(void) const ;
 	void update_scene(const sf::Time& dt, const vec2f& playerWorldPosition);

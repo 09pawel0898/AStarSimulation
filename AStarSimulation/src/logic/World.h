@@ -63,11 +63,11 @@ public:
 	bool switch_tile_state(const vec2i& mousePos);
 	bool switch_path_finding_type(void) const;
 	void change_path_visibility(void) const;
+	void change_enemies_pause_state(void);
 	void update_ending_point(const vec2i& coord) const;
 	void update_enemies(const sf::Time& dt);
+
 private:
 
-	//void switch_tile_to_grass(const vec2i& coord);
-	//void switch_tile_to_obstacle(const vec2i& coord);
 	bool update_grid_tiles(const vec2i& coord);
 };

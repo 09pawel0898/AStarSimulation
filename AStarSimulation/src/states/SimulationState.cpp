@@ -111,6 +111,9 @@ namespace States
 				case sf::Keyboard::LAlt:
 					mEndPointPositioning = true;
 					break;
+				case sf::Keyboard::LShift:
+					mWorld->change_enemies_pause_state();
+					break;
 			}
 		}
 		else if (event.tileType == sf::Event::KeyReleased)

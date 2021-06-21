@@ -55,6 +55,11 @@ void Animation::set_rect_inverse(bool inverse, bool resetAnim)
 	
 }
 
+void Animation::rotate(float degrees)
+{
+	m_Sprite.setRotation(degrees);
+}
+
 void Animation::center_origin(void)
 {
 	m_Sprite.setOrigin((float)m_FrameSize.x / 2.f, (float)m_FrameSize.y / 2);

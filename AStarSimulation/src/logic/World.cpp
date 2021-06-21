@@ -58,7 +58,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 bool World::switch_tile_state(const vec2i& mousePos)
 {
-	vec2i coord = vec2i(mousePos.y / 64, mousePos.x / 64);
+ 	vec2i coord = vec2i(mousePos.y / 64, mousePos.x / 64);
 
 	/*
 	if (mGridTiles[coord.x][coord.y].type == TileType::GRASS)
@@ -95,6 +95,14 @@ void World::change_path_visibility(void) const
 			enemy.get_path_finder().hide_path();
 		else
 			enemy.get_path_finder().show_path();
+	}
+}
+
+void World::change_enemies_pause_state(void)
+{
+	for (auto& enemy : mEnemies)
+	{
+		enemy.switch_pause();
 	}
 }
 
