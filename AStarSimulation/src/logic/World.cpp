@@ -37,7 +37,7 @@ void World::init_enemies(Context context)
 	for (int i = 0; i < mNumEnemies; i++)
 	{
 		Graph* graph = new Graph(WIDTH, HEIGHT);
-		mEnemies.push_back(Enemy(context, graph));
+		mEnemies.push_back(Enemy(context, graph, mCoordsTakenByEnemies));
 	}
 }
 
@@ -52,7 +52,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	}
 	for (auto& enemy : mEnemies)
 	{
-		target.draw(enemy.get_path_finder());
+		target.draw(enemy);
 	}
 }
 
@@ -114,7 +114,7 @@ void World::switch_tile_to_obstacle(const vec2i& coord)
 
 bool World::update_grid_tiles(const vec2i& coord)
 {
-	if (mGridTiles[coord.x][coord.y].tileType == TileType::OBS)
+ 	if (mGridTiles[coord.x][coord.y].tileType == TileType::OBS)
 	{
 		mGridTiles[coord.x][coord.y].tileType = TileType::GRASS;
 		mGridTiles[coord.x][coord.y].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::GRASS));
@@ -211,6 +211,11 @@ bool World::update_grid_tiles(const vec2i& coord)
 	return true;
 }
 
+void World::update_enemies(const sf::Time& dt)
+{
+	for (auto& enemy : mEnemies)
+		enemy.update(dt);
+}
 
 void World::update_ending_point(const vec2i& coord) const
 {

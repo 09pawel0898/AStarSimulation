@@ -7,12 +7,11 @@
 
 namespace States
 {
-
 	SimulationState::SimulationState(StateManager &stateManager, Context context) :
-		State(stateManager, context),
-		mWorld(new World(Application::WIDTH,Application::HEIGHT, Application::NUM_ENEMIES,context))
+		State(stateManager, context)	
 	{
 		init_resources(context);
+		mWorld = new World(Application::WIDTH, Application::HEIGHT, Application::NUM_ENEMIES, context);
 		mWorld->init_world();
 	}
 
@@ -42,6 +41,9 @@ namespace States
 		context.mTextures->load_resource(Textures::ID::OBSTRIDOWN, "assets/img/obstacle14.png");
 		context.mTextures->load_resource(Textures::ID::OBSTRIUP, "assets/img/obstacle16.png");
 
+		context.mTextures->load_resource(Textures::ID::ENEMYWALK, "assets/img/enemy_walk.png");
+		context.mTextures->load_resource(Textures::ID::ENEMYIDLE, "assets/img/enemy_idle.png");
+
 		//spr.setTexture(context.mTextures->get_resource(Textures::ID::GRASS));
 
 
@@ -54,7 +56,6 @@ namespace States
 		/*
 		mWidgets.get_widget<GUI::Button>(Widgets::B_LEAVE)->set_callback([this](void)
 		{
-			disconnect();
 		});
 
 		*/
@@ -70,6 +71,8 @@ namespace States
 	bool SimulationState::update_scene(sf::Time deltaTime)
 	{	
 		static vec2i prevPointedCoord = vec2i();
+
+		mWorld->update_enemies(deltaTime);
 
 		mMousePos = sf::Mouse::getPosition(*get_context().mWindow);
 		bool cursorInWindow = (mMousePos.x > 0 &&  mMousePos.x < Application::WIDTH*64 && mMousePos.y > 0 && mMousePos.y < Application::HEIGHT*64) ? true : false;

@@ -50,7 +50,8 @@ private:
 	Context mContext;	
 	std::list<Enemy> mEnemies;
 	std::vector<std::vector<Tile>> mGridTiles;
-	
+	std::list<vec2i> mCoordsTakenByEnemies;
+
 	void init_border_obstacles(void);	
 	void init_enemies(Context context);
 public:
@@ -63,6 +64,7 @@ public:
 	bool switch_path_finding_type(void) const;
 	void change_path_visibility(void) const;
 	void update_ending_point(const vec2i& coord) const;
+	void update_enemies(const sf::Time& dt);
 private:
 
 	//void switch_tile_to_grass(const vec2i& coord);

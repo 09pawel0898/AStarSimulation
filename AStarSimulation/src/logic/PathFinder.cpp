@@ -71,7 +71,7 @@ void PathFinder::draw_found_path(sf::RenderTarget& target) const
 				sf::Vertex(vec2f((float)(pivot->x * 64 + 64 / 2),(float)(pivot->y * 64 + 64 / 2))),
 				sf::Vertex(vec2f((float)(pivot->parent->x * 64 + 64 / 2),(float)(pivot->parent->y * 64 + 64 / 2))) 
 			};
-			sf::Color color = sf::Color::Green;
+			sf::Color color = sf::Color::White;
 			line[0].color = line[1].color = color;
 			target.draw(line, 2, sf::Lines);
 			pivot = pivot->parent;

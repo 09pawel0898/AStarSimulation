@@ -14,7 +14,6 @@ namespace Textures
 {
 	enum class ID : uint8_t
 	{
-		// sprites
 		GRASS,
 		OBS,
 		OBSLEFTRIGHT,
@@ -33,7 +32,10 @@ namespace Textures
 		OBSTRIUP,
 		OBSTRIDOWN,
 		NODE,
-		CONNECTION
+		CONNECTION,
+
+		ENEMYWALK,
+		ENEMYIDLE
 	};
 }
 
