@@ -28,20 +28,24 @@ private:
 	PathFinder* mPathFinder;
 	Direction mCurrentDir;
 
-	std::unordered_map<Direction, vec2f> mDirections;
+	std::map<Direction, vec2f> mDirections;
 	std::unordered_map<AnimID, Animation> mAnims;
 	std::unordered_map<AnimID, Animation>::iterator mCurrentAnim;
 	AnimID mCurrentAnimID;
-	std::list<vec2i>& mCoordsTakenOnTheGrid;
 
 	vec2i mGridPosition;
 	vec2f mPosition;
+	vec2f mCurrentDestinationPoint;
 	bool mPathExist;
 	bool mPause;
+	double mSpeed; 
 
-
+	void init_random_position(std::list<vec2i>& coordsTakenByEnemies);
+	void init_components(void);
 	void init_animations(void);
 	void init_directions(void);
+
+	bool set_anim(AnimID newAnim);
 public:
 	Graph* mGraph;
 
@@ -50,6 +54,7 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(const sf::Time& dt);
 	void update_rotation(void);
+	vec2i Enemy::update_grid_position(void);
 	bool move(const sf::Time& dt);
 	void switch_pause(void);
 	PathFinder& get_path_finder(void) const;

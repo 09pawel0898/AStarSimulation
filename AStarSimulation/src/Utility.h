@@ -50,7 +50,9 @@ namespace Utility
 
 	void set_origin_to_center(sf::Text &text);
 	void set_origin_to_center(sf::Sprite &sprite);
-	
+	void normalise_vec(vec2i& vec);
+	void normalise_vec(vec2f& vec);
+
 	void cls(void);
 	void console_cursor(bool flag);
 	void hide_console(void);

@@ -15,6 +15,12 @@ namespace Utility
 		sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.0f), std::floor(bounds.top + bounds.height / 2.0f));
 	}
 
+	void normalise_vec(vec2f& vec)
+	{
+		float len = sqrt(vec.x * vec.x + vec.y * vec.y);
+		vec = vec2f(vec.x / len, vec.y / len);
+	}
+
 	void cls(void)
 	{
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD());

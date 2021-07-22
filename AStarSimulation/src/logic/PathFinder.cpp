@@ -21,8 +21,8 @@ void PathFinder::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if (mIsVisible)
 	{
-		draw_start_and_end(target);
 		draw_visited_nodes(target);
+		draw_start_and_end(target);
 		draw_found_path(target);
 	}
 }
@@ -42,7 +42,7 @@ void PathFinder::draw_start_and_end(sf::RenderTarget& target) const
 void PathFinder::draw_visited_nodes(sf::RenderTarget& target) const
 {
 	sf::RectangleShape rec;
-	rec.setFillColor(sf::Color(0,255,0,50));
+	rec.setFillColor(sf::Color(0,255,0,38));
 	rec.setSize(vec2f(32, 32));
 
 	Node* nodes = mGraph.get_nodes();
@@ -162,36 +162,6 @@ void PathFinder::solve_AStar(void)
 	} while (!finish);
 }
 
-void PathFinder::change_path_type(void)
-{
-	mShortest = (mShortest) ? false : true;
-}
-
-Node* PathFinder::get_start(void) const
-{
-	return mStart;
-}
-
-Node* PathFinder::get_end(void) const
-{
-	return mEnd;
-}
-
-void PathFinder::set_start(Node* node)
-{
-	mStart = node;
-}
-
-void PathFinder::set_end(Node* node)
-{
-	mEnd = node;
-}
-
-void PathFinder::show_path(void)
-{
-	mIsVisible = true;
-}
-
 Direction PathFinder::get_direction(void) const
 {
 	vec2f points[2] = { vec2f(0,0),vec2f(0,0) };
@@ -219,12 +189,3 @@ Direction PathFinder::get_direction(void) const
 	return Direction::NUL;
 }
 
-void PathFinder::hide_path(void)
-{
-	mIsVisible = false;
-}
-
-bool PathFinder::get_visibility(void) const
-{
-	return mIsVisible;
-}

@@ -225,7 +225,7 @@ void World::update_enemies(const sf::Time& dt)
 		enemy.update(dt);
 }
 
-void World::update_ending_point(const vec2i& coord) const
+void World::update_ending_point(const vec2i& coord)
 {
 	Node* temp = &mEnemies.front().mGraph->get_nodes()[coord.x * WIDTH + coord.y];
 
@@ -233,6 +233,8 @@ void World::update_ending_point(const vec2i& coord) const
 	{
 		for (auto& enemy : mEnemies)
 		{
+			vec2i newGridPos = enemy.update_grid_position();
+			enemy.get_path_finder().set_start(&enemy.mGraph->get_nodes()[newGridPos.x * enemy.mGraph->WIDTH + newGridPos.y]);
 			enemy.get_path_finder().set_end(&enemy.mGraph->get_nodes()[coord.x * WIDTH + coord.y]);
 			enemy.get_path_finder().solve_AStar();
 		}
