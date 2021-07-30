@@ -9,28 +9,15 @@ typedef States::State::Context Context;
 
 enum class ConnectionType : uint8_t
 {
-	DOWN,
-	UP,
-	LEFT,
-	RIGHT,
-	UPDOWN,
-	LEFTRIGHT,
-	CROSS,
-	CENTER,
-	UPLEFT,
-	UPRIGHT,
-	DOWNLEFT,
-	DOWNRIGHT,
-	TRILEFT,
-	TRIRIGHT,
-	TRIDOWN,
-	TRIUP,
+	DOWN,UP,LEFT,RIGHT,
+	UPDOWN,LEFTRIGHT, DOWNLEFT, DOWNRIGHT, UPLEFT, UPRIGHT,
+	CROSS,CENTER,
+	TRILEFT,TRIRIGHT,TRIDOWN,TRIUP
 };
 
 enum class TileType : uint8_t
 {
-	GRASS,
-	OBS
+	GRASS,OBS
 };
 
 struct Tile
@@ -51,8 +38,10 @@ private:
 	std::list<Enemy> mEnemies;
 	std::vector<std::vector<Tile>> mGridTiles;
 	std::list<vec2i> mCoordsTakenByEnemies;
-	
+
+private:
 	void init_enemies(Context context);
+
 public:
 	void init_world(void);
 

@@ -5,11 +5,12 @@
 
 class Application : private sf::NonCopyable
 {
+public:
+	static int WIDTH;
+	static int HEIGHT;
+	static int NUM_ENEMIES;
 private:
 	static const sf::Time TIME_PER_FRAME;
-
-private:
-
 
 	sf::RenderWindow* mWindow;
 	TextureManager mTextures;
@@ -29,11 +30,8 @@ private:
 
 	void load_settings_from_file(void);
 	void init_labels(void);
+
 public:
 	Application(void);
 	void run(void);
-
-	static int WIDTH;
-	static int HEIGHT;
-	static int NUM_ENEMIES;
 };

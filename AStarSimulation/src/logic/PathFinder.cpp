@@ -177,14 +177,14 @@ Direction PathFinder::get_direction(void) const
 		float dx = points[0].x - points[1].x;
 		float dy = points[0].y - points[1].y;
 
-		if (dx > 0 && dy > 0)	return Direction::RD;	 Direction::RD;
-		if (dx > 0 && dy < 0)	return Direction::RU;	 Direction::LD;
-		if (dx < 0 && dy > 0)	return Direction::LD;	 Direction::RU;
-		if (dx < 0 && dy < 0)	return Direction::LU;	 Direction::LU;
-		if (dx < 0 && dy == 0)	return Direction::L;	 Direction::U;
-		if (dx > 0 && dy == 0)	return Direction::R;	 Direction::D;
-		if (dx == 0 && dy < 0)	return Direction::U;	 Direction::L;
-		if (dx == 0 && dy > 0)	return Direction::D;	 Direction::R;
+		if (dx > 0 && dy > 0)	return Direction::RD;
+		if (dx > 0 && dy < 0)	return Direction::RU;
+		if (dx < 0 && dy > 0)	return Direction::LD;
+		if (dx < 0 && dy < 0)	return Direction::LU;
+		if (dx < 0 && dy == 0)	return Direction::L;
+		if (dx > 0 && dy == 0)	return Direction::R;
+		if (dx == 0 && dy < 0)	return Direction::U;
+		if (dx == 0 && dy > 0)	return Direction::D;
 	}
 	return Direction::NUL;
 }

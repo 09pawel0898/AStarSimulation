@@ -43,28 +43,11 @@ namespace States
 
 		context.mTextures->load_resource(Textures::ID::ENEMYWALK, "assets/img/enemy_walk.png");
 		context.mTextures->load_resource(Textures::ID::ENEMYIDLE, "assets/img/enemy_idle.png");
-
-		//spr.setTexture(context.mTextures->get_resource(Textures::ID::GRASS));
-
-
-		//sf::Texture &texture = context.mTextures->get_resource(Textures::ID::B_READY);
-
-		//mWidgets.insert_widget<GUI::Button>(Widgets::B_READY, new GUI::Button(sf::Vector2f(90.0f, 730.f), texture, "Ready", font, 25));
-		//mWidgets.get_widget<GUI::Button>(Widgets::B_READY)->set_text_color(sf::Color::White);
-
-		
-		/*
-		mWidgets.get_widget<GUI::Button>(Widgets::B_LEAVE)->set_callback([this](void)
-		{
-		});
-
-		*/
 	}
 
 	void SimulationState::render(void)
 	{
 		static sf::RenderWindow* window = get_context().mWindow;
-		//window->draw(spr);
 		window->draw(*mWorld);	
 	}
 

@@ -8,12 +8,13 @@ namespace States
 	class SimulationState : public State
 	{
 	private:
-		//GUI::WidgetContainer<Widgets> mWidgets;
-		//std::unordered_map<Keys, bool> mKeysPressed;
 		World* mWorld;
-		void init_resources(Context& context);
 		vec2i mMousePos;
 		bool mEndPointPositioning = false;
+
+	private:
+		void init_resources(Context& context);
+		
 	public:
 		SimulationState(StateManager &stateManager, Context context);
 		virtual ~SimulationState(void);

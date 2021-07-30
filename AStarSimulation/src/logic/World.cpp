@@ -26,7 +26,8 @@ void World::init_world(void)
 		mGridTiles.emplace_back(std::vector<Tile>());
 		for (int j = 0; j < WIDTH; j++)
 		{
-			temp.rec.setPosition(vec2f((float)(j * 64), (float)(i * 64)));
+			temp.rec.setPosition( vec2f((float)(j * 64), 
+										(float)(i * 64)));
 			mGridTiles[i].emplace_back(temp);
 		}
 	}
@@ -59,13 +60,6 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 bool World::switch_tile_state(const vec2i& mousePos)
 {
  	vec2i coord = vec2i(mousePos.y / 64, mousePos.x / 64);
-
-	/*
-	if (mGridTiles[coord.x][coord.y].type == TileType::GRASS)
-		switch_tile_to_obstacle(coord);
-	else if(mGridTiles[coord.x][coord.y].type == TileType::OBSTACLE)
-		switch_tile_to_grass(coord);
-	*/
 	update_grid_tiles(coord);
 
 	for (auto& enemy : mEnemies)
@@ -101,24 +95,8 @@ void World::change_path_visibility(void) const
 void World::change_enemies_pause_state(void)
 {
 	for (auto& enemy : mEnemies)
-	{
 		enemy.switch_pause();
-	}
 }
-
-/*
-void World::switch_tile_to_grass(const vec2i& coord)
-{
-	mGridTiles[coord.x][coord.y].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::GRASS));
-	mGridTiles[coord.x][coord.y].type = TileType::GRASS;
-}
-
-void World::switch_tile_to_obstacle(const vec2i& coord)
-{
-	mGridTiles[coord.x][coord.y].rec.setTexture(&mContext.mTextures->get_resource(Textures::ID::OBSTACLE));
-	mGridTiles[coord.x][coord.y].type = TileType::OBSTACLE;
-}
-*/
 
 bool World::update_grid_tiles(const vec2i& coord)
 {
