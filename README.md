@@ -24,8 +24,7 @@ If you are using Visual Studio 2019 you can simply run generate_project.bat scri
 
 ## Screenshots
 
-![ScreenShot](scr/screenshot3.jpg)
+<p align="center">
+	<img src="https://media.giphy.com/media/SQgLptpZfPYZ3Q6gZq/giphy.gif" alt="animated">
+</p> 
 
-![ScreenShot](scr/screenshot2.jpg)
-
-![ScreenShot](scr/screenshot1.jpg)
